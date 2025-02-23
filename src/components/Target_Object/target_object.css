@@ -5,6 +5,8 @@
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   transition: all 0.2s ease;
+  animation-name: fade-in;
+  animation-duration: 0.5s;
 }
 
 @keyframes move-horizontal {
@@ -31,6 +33,16 @@
   80% { transform: translate(-1px, -1px) rotate(1deg); }
   90% { transform: translate(1px, 2px) rotate(0deg); }
   100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 .shake {
