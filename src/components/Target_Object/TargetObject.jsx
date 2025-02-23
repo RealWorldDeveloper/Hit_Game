@@ -3,10 +3,12 @@ import hitSound from "../../assets/hit-sound.mp3";
 import fakeHitSound from "../../assets/fake-hit-sound.mp3"; // Add your fake hit sound here
 import targetImage from "../../assets/target.png";
 import fakeTargetImage from "../../assets/fake-target.png"; // Add your fake target image here
+import fakeTargetImage2 from "../../assets/fake-target-2.png"; // Add your second fake target image here
+import fakeTargetImage3 from "../../assets/fake-target-3.png"; // Add your third fake target image here
 import hitAnimation from "../../assets/smash.png"; // Add your animation image here
 import "./target_object.css";
 
-const TargetObject = ({ setScore, isPlaying, stickPosition }) => {
+const TargetObject = ({ setScore, isPlaying, stickPosition, setTime }) => {
   const [objects, setObjects] = useState([]);
   const [showAnimation, setShowAnimation] = useState(false); // State for animation
   const [animationPosition, setAnimationPosition] = useState({ top: "50%", left: "50%" });
@@ -87,14 +89,80 @@ const TargetObject = ({ setScore, isPlaying, stickPosition }) => {
       }, 1000); // Disappear more quickly (1 second)
     };
 
+    const showFrequentFakeObject = () => {
+      const newObjects = [];
+      newObjects.push({
+        id: 2,
+        type: "fake2",
+        position: {
+          top: `${Math.random() * 80 + 10}%`,
+          left: `${Math.random() * 80 + 10}%`,
+        },
+        speed: Math.random() * 1 + 0.5, // Random speed between 0.5 and 1.5 seconds
+        direction: Math.random() > 0.5 ? 'horizontal' : 'vertical', // Random direction
+        visible: true,
+      });
+
+      setObjects((prevObjects) => [...prevObjects, ...newObjects]);
+
+      setTimeout(() => {
+        setObjects((prevObjects) =>
+          prevObjects.map((obj) => (obj.id === 2 ? { ...obj, visible: false } : obj))
+        );
+        setFrequentFakeInterval(); // Set a new random interval after the objects disappear
+      }, 1000); // Disappear more slowly (1 second)
+    };
+
+    const showRareFakeObject = () => {
+      const newObjects = [];
+      newObjects.push({
+        id: 3,
+        type: "fake3",
+        position: {
+          top: `${Math.random() * 80 + 10}%`,
+          left: `${Math.random() * 80 + 10}%`,
+        },
+        speed: Math.random() * 3 + 2, // Random speed between 2 and 5 seconds
+        direction: Math.random() > 0.5 ? 'horizontal' : 'vertical', // Random direction
+        visible: true,
+      });
+
+      setObjects((prevObjects) => [...prevObjects, ...newObjects]);
+
+      setTimeout(() => {
+        setObjects((prevObjects) =>
+          prevObjects.map((obj) => (obj.id === 3 ? { ...obj, visible: false } : obj))
+        );
+        setRareFakeInterval(); // Set a new random interval after the objects disappear
+      }, 3000); // Disappear more slowly (3 seconds)
+    };
+
     const setRandomInterval = () => {
       const randomTime = Math.random() * 1000 + 500; // Random time between 0.5 to 1.5 seconds
       const interval = setTimeout(showObject, randomTime);
       return () => clearTimeout(interval);
     };
 
+    const setFrequentFakeInterval = () => {
+      const randomTime = Math.random() * 2000 + 1000; // Random time between 1 to 3 seconds
+      const interval = setTimeout(showFrequentFakeObject, randomTime);
+      return () => clearTimeout(interval);
+    };
+
+    const setRareFakeInterval = () => {
+      const randomTime = Math.random() * 5000 + 5000; // Random time between 5 to 10 seconds
+      const interval = setTimeout(showRareFakeObject, randomTime);
+      return () => clearTimeout(interval);
+    };
+
     const clearRandomInterval = setRandomInterval();
-    return () => clearRandomInterval();
+    const clearFrequentFakeInterval = setFrequentFakeInterval();
+    const clearRareFakeInterval = setRareFakeInterval();
+    return () => {
+      clearRandomInterval();
+      clearFrequentFakeInterval();
+      clearRareFakeInterval();
+    };
   }, [isPlaying]);
 
   useEffect(() => {
@@ -136,9 +204,15 @@ const TargetObject = ({ setScore, isPlaying, stickPosition }) => {
       setShowAnimation(true); // Show animation
       setTimeout(() => setShowAnimation(false), 1000); // Hide animation after 1 second
       setScore((prev) => prev + 1);
-    } else {
+    } else if (obj.type === "fake") {
       new Audio(fakeHitSound).play();
       setScore((prev) => prev - 1);
+    } else if (obj.type === "fake2") {
+      new Audio(fakeHitSound).play();
+      setScore((prev) => prev - 5);
+    } else if (obj.type === "fake3") {
+      new Audio(fakeHitSound).play();
+      setTime((prev) => prev + 10); // Increase time by 10 seconds
     }
     setObjects((prevObjects) =>
       prevObjects.map((o) => (o.id === obj.id ? { ...o, visible: false } : o))
@@ -153,8 +227,8 @@ const TargetObject = ({ setScore, isPlaying, stickPosition }) => {
           obj.visible && (
             <img
               key={obj.id}
-              src={obj.type === "real" ? targetImage : fakeTargetImage}
-              alt={obj.type === "real" ? "Target" : "Fake Target"}
+              src={obj.type === "real" ? targetImage : obj.type === "fake" ? fakeTargetImage : obj.type === "fake2" ? fakeTargetImage2 : fakeTargetImage3}
+              alt={obj.type === "real" ? "Target" : obj.type === "fake" ? "Fake Target" : obj.type === "fake2" ? "Fake Target 2" : "Fake Target 3"}
               className={`target-object target-object-${obj.id}`}
               style={{
                 ...obj.position,

@@ -8,7 +8,7 @@ import "./game_board.css";
 
 const GameBoard = () => {
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(45); // Change initial time to 45 seconds
   const [isPlaying, setIsPlaying] = useState(false);
   const [stickPosition, setStickPosition] = useState({ x: 0, y: 0 });
 
@@ -23,7 +23,7 @@ const GameBoard = () => {
 
   const startGame = () => {
     setScore(0);
-    setTimeLeft(30);
+    setTimeLeft(45); // Reset time to 45 seconds when the game starts
     setIsPlaying(true);
   };
 
