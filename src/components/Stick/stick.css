@@ -1,7 +1,7 @@
 .stick {
   position: fixed;
-  width: 40px;
-  height: 50px;
+  width: 30px;
+  height: 40px;
   transform-origin: bottom;
   transition: transform 0.1s ease-in-out; /* Faster and smoother transition */
   cursor: none; /* Hide the cursor */
