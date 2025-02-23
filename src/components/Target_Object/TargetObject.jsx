@@ -83,8 +83,13 @@ const TargetObject = ({ setScore, isPlaying, stickPosition, setTime }) => {
 
       setTimeout(() => {
         setObjects((prevObjects) =>
-          prevObjects.map((obj) => ({ ...obj, visible: false }))
+          prevObjects.map((obj) => ({ ...obj, visible: false, fadeOut: true }))
         );
+        setTimeout(() => {
+          setObjects((prevObjects) =>
+            prevObjects.filter((obj) => !obj.fadeOut)
+          );
+        }, 500); // Remove objects after fade-out duration
         setRandomInterval(); // Set a new random interval after the objects disappear
       }, 1000); // Disappear more quickly (1 second)
     };
@@ -107,8 +112,13 @@ const TargetObject = ({ setScore, isPlaying, stickPosition, setTime }) => {
 
       setTimeout(() => {
         setObjects((prevObjects) =>
-          prevObjects.map((obj) => (obj.id === 2 ? { ...obj, visible: false } : obj))
+          prevObjects.map((obj) => (obj.id === 2 ? { ...obj, visible: false, fadeOut: true } : obj))
         );
+        setTimeout(() => {
+          setObjects((prevObjects) =>
+            prevObjects.filter((obj) => !obj.fadeOut)
+          );
+        }, 500); // Remove objects after fade-out duration
         setFrequentFakeInterval(); // Set a new random interval after the objects disappear
       }, 1000); // Disappear more slowly (1 second)
     };
@@ -131,8 +141,13 @@ const TargetObject = ({ setScore, isPlaying, stickPosition, setTime }) => {
 
       setTimeout(() => {
         setObjects((prevObjects) =>
-          prevObjects.map((obj) => (obj.id === 3 ? { ...obj, visible: false } : obj))
+          prevObjects.map((obj) => (obj.id === 3 ? { ...obj, visible: false, fadeOut: true } : obj))
         );
+        setTimeout(() => {
+          setObjects((prevObjects) =>
+            prevObjects.filter((obj) => !obj.fadeOut)
+          );
+        }, 500); // Remove objects after fade-out duration
         setRareFakeInterval(); // Set a new random interval after the objects disappear
       }, 3000); // Disappear more slowly (3 seconds)
     };
@@ -215,8 +230,13 @@ const TargetObject = ({ setScore, isPlaying, stickPosition, setTime }) => {
       setTime((prev) => prev + 10); // Increase time by 10 seconds
     }
     setObjects((prevObjects) =>
-      prevObjects.map((o) => (o.id === obj.id ? { ...o, visible: false } : o))
+      prevObjects.map((o) => (o.id === obj.id ? { ...o, visible: false, fadeOut: true } : o))
     );
+    setTimeout(() => {
+      setObjects((prevObjects) =>
+        prevObjects.filter((obj) => !obj.fadeOut)
+      );
+    }, 500); // Remove objects after fade-out duration
     console.log("Hit object:", obj);
   };
 
@@ -229,7 +249,7 @@ const TargetObject = ({ setScore, isPlaying, stickPosition, setTime }) => {
               key={obj.id}
               src={obj.type === "real" ? targetImage : obj.type === "fake" ? fakeTargetImage : obj.type === "fake2" ? fakeTargetImage2 : fakeTargetImage3}
               alt={obj.type === "real" ? "Target" : obj.type === "fake" ? "Fake Target" : obj.type === "fake2" ? "Fake Target 2" : "Fake Target 3"}
-              className={`target-object target-object-${obj.id}`}
+              className={`target-object target-object-${obj.id} ${obj.fadeOut ? 'fade-out' : ''}`}
               style={{
                 ...obj.position,
                 animationName: obj.direction === 'horizontal' ? 'move-horizontal' : 'move-vertical',

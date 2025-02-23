@@ -1,0 +1,49 @@
+.animation-container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.moving-object {
+  width: 100px;
+  height: 100px;
+  background-image: url('../../assets/run.gif'); /* Replace with your image path */
+  background-size: contain; /* Adjusted to fit the image within the element */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-position: center;
+  overflow: hidden;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: moveLeftToRight 15s linear infinite; /* Changed duration from 3s to 5s */
+}
+
+.helicopter {
+  position: absolute;
+  bottom: 50px;
+  right: 10px;
+  width: 400px;
+  height: auto;
+}
+
+@keyframes moveLeftToRight {
+  0% {
+    left: -50px;
+    opacity: 1;
+  }
+  80% {
+    left: calc(100% - 360px); /* Adjusted to stop next to the helicopter */
+    opacity: 1;
+  }
+  85% {
+    left: calc(100% - 360px); /* Maintain position next to the helicopter */
+    opacity: 0; /* Disappear after hitting the helicopter */
+  }
+  100% {
+    left: calc(100% - 360px); /* Maintain position next to the helicopter */
+    opacity: 0; /* Maintain disappearance */
+  }
+}
+
