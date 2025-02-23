@@ -17,7 +17,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  animation: moveLeftToRight 15s linear infinite; /* Changed duration from 3s to 5s */
+  animation: moveLeftToRight 60s linear forwards; /* Move over 60 seconds and stop */
 }
 
 .helicopter {
@@ -33,17 +33,22 @@
     left: -50px;
     opacity: 1;
   }
-  80% {
-    left: calc(100% - 360px); /* Adjusted to stop next to the helicopter */
+  100% {
+    left: calc(100% - 360px); /* Stop next to the helicopter */
     opacity: 1;
   }
-  85% {
-    left: calc(100% - 360px); /* Maintain position next to the helicopter */
-    opacity: 0; /* Disappear after hitting the helicopter */
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
   }
-  100% {
-    left: calc(100% - 360px); /* Maintain position next to the helicopter */
-    opacity: 0; /* Maintain disappearance */
+  to {
+    opacity: 0;
   }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-out forwards; /* Apply smooth fade-out animation */
 }
 
