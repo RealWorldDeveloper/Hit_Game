@@ -1,13 +1,13 @@
 .animation-container {
   width: 100%;
-  height: 200px;
+  height: 40vh;
   position: relative;
   overflow: hidden;
 }
 
 .moving-object {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   background-image: url('../../assets/run.gif'); /* Replace with your image path */
   background-size: contain; /* Adjusted to fit the image within the element */
   background-repeat: no-repeat; /* Prevent the image from repeating */
@@ -15,16 +15,16 @@
   overflow: hidden;
   border-radius: 50%;
   position: absolute;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
-  animation: moveLeftToRight 60s linear forwards; /* Move over 60 seconds and stop */
+  animation: moveLeftToRight 75s linear forwards; /* Move over 60 seconds and stop */
 }
 
 .helicopter {
   position: absolute;
-  bottom: 50px;
+  bottom: 130px;
   right: 10px;
-  width: 400px;
+  width: 600px;
   height: auto;
 }
 

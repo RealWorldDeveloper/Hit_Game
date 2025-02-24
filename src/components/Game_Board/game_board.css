@@ -3,10 +3,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 70vh;
-  background-color: #ffffff;
+  height: 60vh;
   position: relative;
-  border: 2px solid red;
 }
 
 .hide-cursor {

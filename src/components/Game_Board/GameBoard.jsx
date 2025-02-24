@@ -6,7 +6,6 @@ import StartButton from "../Start_Button/StartButton";
 import Stick from "../Stick/Stick";
 import "./game_board.css";
 import RunningCharacter from "../Character/Character";
-
 const GameBoard = () => {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60); // Change initial time to 60 seconds
