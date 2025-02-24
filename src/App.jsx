@@ -12,7 +12,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/gameboard" element={<GameBoard />} />
       </Routes>
-      <RunningCharacter/>
     </Router>
     
   )
