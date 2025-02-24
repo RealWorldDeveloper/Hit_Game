@@ -1,12 +1,9 @@
-import React from "react";
-import "./start_button.css";
-
-const StartButton = ({ startGame }) => {
+import React from 'react'
+import './StartButton.css'
+function StartButton({startGame}) {
   return (
-    <button className="start-button" onClick={startGame}>
-      Start Game
-    </button>
-  );
-};
+    <div onClick={startGame} className='start-button'>StartButton </div>
+  )
+}
 
-export default StartButton;
+export default StartButton
